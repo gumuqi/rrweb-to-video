@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.js"></script>
+    <script src="https://cdn.bootcss.com/lz-string/1.4.4/lz-string.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        window.pageLoaded();
+      };
+      function replay(events) {
+        window.chromePlayer = new rrweb.Replayer(events);
+
+        let started = false;
+        window.chromePlayer.on("start", (payload) => {
+          if (started === false) {
+            console.log("播放开始");
+            started = true;
+            window.replayStart();
+          }
+        });
+        let index = 0;
+        window.chromePlayer.on("pause", (payload) => {
+          console.log("暂停------", index++);
+        });
+        window.chromePlayer.on("finish", (payload) => {
+          console.log("播放结束");
+          window.replayEnd();
+        });
+
+        window.chromePlayer.play();
+      }
+    </script>
+  </body>
+</html>
